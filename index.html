@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ett dagligt svenskt ordquiz-spel inspirerat av högskoleprovet. Testa din ordkunskap varje dag!">
+    <title>Svenska Ordspelet - Dagligt Ordquiz</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/screens.css">
+    <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@400;600&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="container">
+                <header class="game-header">
+                    <h1 class="game-title">Svenska Ordspelet</h1>
+                    <p class="game-subtitle">Dagligt ordquiz inspirerat av högskoleprovet</p>
+                </header>
+
+                <div class="streak-display">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-text">Streak: <strong id="welcome-streak">0</strong> <span id="welcome-streak-unit">dagar</span></span>
+                </div>
+
+                <div class="welcome-actions">
+                    <button id="play-button" class="btn-primary">
+                        Spela dagens ord
+                    </button>
+                    <button id="stats-button-welcome" class="btn-secondary">
+                        Se statistik
+                    </button>
+                </div>
+
+                <p id="motivational-message" class="motivational-text">
+                    Testa din ordkunskap!
+                </p>
+
+                <p id="already-played-message" class="already-played-text" style="display: none;">
+                    Du har redan spelat dagens ord!<br>
+                    Kom tillbaka imorgon för nya frågor.
+                </p>
+            </div>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="container">
+                <div class="question-header">
+                    <div class="question-info">
+                        <span id="question-counter">Fråga 1/4</span>
+                        <span id="difficulty-badge" class="difficulty-badge">Lätt</span>
+                    </div>
+                    <div class="progress-dots">
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot" data-index="3"></span>
+                    </div>
+                </div>
+
+                <div class="question-content">
+                    <p class="question-prompt">Vad betyder ordet:</p>
+                    <h2 id="question-word" class="question-word">FABEL</h2>
+                </div>
+
+                <div id="answer-options" class="answer-options">
+                    <button class="answer-card" data-answer="A">
+                        <span class="answer-letter">A</span>
+                        <span class="answer-text">moraliserande saga</span>
+                    </button>
+                    <button class="answer-card" data-answer="B">
+                        <span class="answer-letter">B</span>
+                        <span class="answer-text">historisk berättelse</span>
+                    </button>
+                    <button class="answer-card" data-answer="C">
+                        <span class="answer-letter">C</span>
+                        <span class="answer-text">poetisk dikt</span>
+                    </button>
+                    <button class="answer-card" data-answer="D">
+                        <span class="answer-letter">D</span>
+                        <span class="answer-text">komisk teaterscen</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="container">
+                <div class="result-header">
+                    <div class="question-info">
+                        <span id="result-question-counter">Fråga 1/4</span>
+                        <span id="result-difficulty-badge" class="difficulty-badge">Lätt</span>
+                    </div>
+                    <div class="progress-dots">
+                        <span class="dot filled" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot" data-index="3"></span>
+                    </div>
+                </div>
+
+                <div id="result-feedback" class="result-feedback correct">
+                    <div class="feedback-icon">✓</div>
+                    <h2 class="feedback-title">RÄTT!</h2>
+                </div>
+
+                <div class="explanation-box">
+                    <h3 class="explanation-title">Förklaring</h3>
+                    <p id="explanation-text" class="explanation-text">
+                        En fabel är en kort, moraliserande saga ofta med djur som huvudpersoner.
+                    </p>
+                </div>
+
+                <button id="continue-button" class="btn-primary">
+                    Nästa fråga
+                </button>
+            </div>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="completion-screen" class="screen">
+            <div class="container">
+                <header class="completion-header">
+                    <h2 class="completion-title">Dagens resultat</h2>
+                </header>
+
+                <div class="score-display">
+                    <h3 id="final-score" class="final-score">3/4 RÄTT</h3>
+                    <div id="emoji-grid" class="emoji-grid">🟩 🟩 🟨 ⬜</div>
+                </div>
+
+                <div class="streak-celebration">
+                    <span class="streak-icon large">🔥</span>
+                    <p class="streak-info">
+                        Streak: <strong id="completion-streak">8</strong> <span id="completion-streak-unit">dagar</span>
+                    </p>
+                    <p id="streak-message" class="streak-message">Bra jobbat!</p>
+                </div>
+
+                <div class="completion-actions">
+                    <button id="share-button" class="btn-primary">
+                        Dela resultat
+                    </button>
+                    <button id="stats-button-completion" class="btn-secondary">
+                        Se statistik
+                    </button>
+                </div>
+
+                <p class="comeback-message">
+                    Kom tillbaka imorgon för nya ord!
+                </p>
+            </div>
+        </div>
+
+        <!-- Statistics Modal -->
+        <div id="stats-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Statistik</h2>
+                    <button id="close-stats-button" class="close-button" aria-label="Stäng">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="stats-overview">
+                        <div class="stat-card">
+                            <div class="stat-value" id="current-streak-stat">0</div>
+                            <div class="stat-label">Nuvarande streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="longest-streak-stat">0</div>
+                            <div class="stat-label">Längsta streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="games-played-stat">0</div>
+                            <div class="stat-label">Spelade dagar</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="accuracy-stat">0%</div>
+                            <div class="stat-label">Totalt rätt</div>
+                        </div>
+                    </div>
+
+                    <div class="difficulty-stats">
+                        <h3 class="stats-section-title">Svårighetsgrad</h3>
+                        <div class="difficulty-breakdown">
+                            <div class="difficulty-row">
+                                <span class="difficulty-label easy">Lätt:</span>
+                                <span class="difficulty-value" id="easy-stat">0/0 (0%)</span>
+                            </div>
+                            <div class="difficulty-row">
+                                <span class="difficulty-label medium">Medel:</span>
+                                <span class="difficulty-value" id="medium-stat">0/0 (0%)</span>
+                            </div>
+                            <div class="difficulty-row">
+                                <span class="difficulty-label hard">Svår:</span>
+                                <span class="difficulty-value" id="hard-stat">0/0 (0%)</span>
+                            </div>
+                            <div class="difficulty-row">
+                                <span class="difficulty-label superhard">Supersvår:</span>
+                                <span class="difficulty-value" id="superhard-stat">0/0 (0%)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calendar-section">
+                        <h3 class="stats-section-title">Senaste 30 dagarna</h3>
+                        <div id="calendar-grid" class="calendar-grid">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                        <div class="calendar-legend">
+                            <span class="legend-item">
+                                <span class="legend-square empty"></span> Inte spelat
+                            </span>
+                            <span class="legend-item">
+                                <span class="legend-square filled"></span> Spelat
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copy Feedback Toast -->
+        <div id="copy-feedback" class="copy-feedback">
+            Kopierat! Dela på sociala medier.
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/data/words-easy.js"></script>
+    <script src="js/data/words-medium.js"></script>
+    <script src="js/data/words-hard.js"></script>
+    <script src="js/data/words-superhard.js"></script>
+    <script src="js/services/DateService.js"></script>
+    <script src="js/services/StorageService.js"></script>
+    <script src="js/services/QuestionService.js"></script>
+    <script src="js/services/StatsService.js"></script>
+    <script src="js/ui/ScreenManager.js"></script>
+    <script src="js/ui/QuestionUI.js"></script>
+    <script src="js/ui/ResultsUI.js"></script>
+    <script src="js/ui/StatsUI.js"></script>
+    <script src="js/ui/ShareUI.js"></script>
+    <script src="js/ui/SoundManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
